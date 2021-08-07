@@ -1,0 +1,51 @@
+修改package里的对应文件以完成：
+1、将某个文件加入编译
+2、使用msg/srv
+
+/CMakeLists.txt
+
+find_package(catkin REQUIRED COMPONENTS
+  ##PACKAGES
+  message_generation
+)
+
+
+
+add_message_files(
+  FILES
+  hobo.msg
+)
+
+add_service_files(
+  FILES
+  my_srv.srv
+)
+
+
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+
+
+catkin_package(
+  CATKIN_DEPENDS geometry_msgs roscpp rospy std_msgs turtlesim message_runtime
+)
+
+
+add_executable(talker src/talker.cpp)
+target_link_libraries(talker ${catkin_LIBRARIES})
+add_dependencies(talker beginner_tutorials_generate_messages_cpp)
+
+
+
+
+/package.xml
+
+
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+
